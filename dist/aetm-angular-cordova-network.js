@@ -84,5 +84,8 @@
                     return states[navigator.connection.type];
                 }
             };
+        }])
+        .run(['$injector', function ($injector) {
+            $injector.get('aetmNetworkService'); //ensure the factory always gets initialised
         }]);
 })();
