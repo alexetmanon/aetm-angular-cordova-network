@@ -1,0 +1,32 @@
+{
+  "name": "aetm-angular-cordova-network",
+  "authors": [
+    "Alexandre Bonhomme <wall-e@alexetmanon.com> (http://www.alexetmanon.com)"
+  ],
+  "description": "",
+  "main": "./dist/aetm-angular-cordova-network.js",
+  "moduleType": [],
+  "keywords": [
+    "angularjs",
+    "angular",
+    "cordova",
+    "network"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "make-release.sh",
+    "gulpfile.js"
+  ],
+  "dependencies": {
+    "angular": "^1.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alexetmanon/aetm-angular-cordova-network.git"
+  }
+}
