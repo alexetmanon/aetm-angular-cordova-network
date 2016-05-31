@@ -82,6 +82,14 @@
                     states[Connection.NONE] = undefined;
 
                     return states[navigator.connection.type];
+                },
+
+                /**
+                 * Return the connection type.
+                 * @return String
+                 */
+                getRawConnectionType: function () {
+                    return navigator.connection.type;
                 }
             };
         }])
