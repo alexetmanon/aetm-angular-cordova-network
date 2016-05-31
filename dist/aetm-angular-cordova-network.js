@@ -2,21 +2,65 @@
     'use strict';
 
     /**
+     * This plugin is EXTREMLY inspired by the implementation of $cordovaNetwork in ngCordova.
+     *
      * @see https://github.com/driftyco/ng-cordova/blob/master/src/plugins/network.js
+     *
+     * Dependencies :
+     * - https://github.com/apache/cordova-plugin-network-information
      */
     angular
         .module('aetm-network', [])
-        .factory('aetmNetworkService', [function () {
+        .factory('aetmNetworkService', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+
+            /**
+             * Fires offline a event
+             */
+            var offlineEvent = function () {
+                var state = navigator.connection.type;
+
+                $timeout(function () {
+                    $rootScope.$broadcast('aetmNetwork:offline', state);
+                });
+            };
+
+            /**
+             * Fires online a event
+             */
+            var onlineEvent = function () {
+                var state = navigator.connection.type;
+
+                $timeout(function () {
+                    $rootScope.$broadcast('aetmNetwork:online', state);
+                });
+            };
+
+            document.addEventListener('deviceready', function () {
+                if (!navigator.connection) {
+                    return;
+                }
+
+                document.addEventListener('offline', offlineEvent, false);
+                document.addEventListener('online', onlineEvent, false);
+            });
+
             return {
                 /**
-                 * @return Boolean|undefined
+                 * @return Boolean
                  */
                 isOnline: function () {
-                    if (navigator.connection.type === Connection.UNKNOWN) {
-                        return undefined;
-                    }
+                    var state = navigator.connection.type;
 
-                    return navigator.connection.type !== Connection.NONE;
+                    return state !== Connection.UNKNOWN && state !== Connection.NONE;
+                },
+
+                /**
+                 * @return Boolean
+                 */
+                isOffline: function () {
+                    var state = navigator.connection.type;
+
+                    return state === Connection.UNKNOWN || state === Connection.NONE;
                 },
 
                 /**
@@ -27,13 +71,14 @@
                 getConnectionType: function () {
                     var states = {};
 
-                    states[Connection.UNKNOWN] = 'UNKNOWN';
                     states[Connection.ETHERNET] = 'ETHERNET';
                     states[Connection.WIFI] = 'WIFI';
                     states[Connection.CELL_2G] = 'CELL_2G';
                     states[Connection.CELL_3G] = 'CELL_3G';
                     states[Connection.CELL_4G] = 'CELL_4G';
                     states[Connection.CELL] = 'CELL';
+
+                    states[Connection.UNKNOWN] = undefined;
                     states[Connection.NONE] = undefined;
 
                     return states[navigator.connection.type];
