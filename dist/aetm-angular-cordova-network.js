@@ -20,7 +20,7 @@
                 var state = navigator.connection.type;
 
                 $timeout(function () {
-                    $rootScope.$broadcast('aetmNetwork:offline', state);
+                    $rootScope.$broadcast('aetm-network:offline', state);
                 });
             };
 
@@ -31,7 +31,7 @@
                 var state = navigator.connection.type;
 
                 $timeout(function () {
-                    $rootScope.$broadcast('aetmNetwork:online', state);
+                    $rootScope.$broadcast('aetm-network:online', state);
                 });
             };
 
